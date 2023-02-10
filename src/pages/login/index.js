@@ -2,11 +2,19 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Card } from "react-bootstrap";
+import _ from "lodash";
+import { toast, ToastContainer } from "react-toastify";
 import "../../assets/css/loginPage.css";
+
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const loginCredentials = {
+    email: "infantvishal@gmail.com",
+    password: "qwerty123",
+  };
 
   const initialValues = {
     email: "",
@@ -23,12 +31,34 @@ const LoginPage = () => {
       password: yup.string().required("Please enter the valid password"),
     }),
     onSubmit: (values) => {
-      navigate("/memes");
+      if (_.isEqual(values, loginCredentials)) {
+        toast.success("Updated successfully", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigate("/memes");
+      } else {
+        toast.error("Invalid crendentials", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     },
   });
 
   return (
     <div className="login-overall-bg">
+      <ToastContainer />
       <Card style={{ width: "30rem" }}>
         <Card.Body>
           <Card.Title className="text-center">Login</Card.Title>
