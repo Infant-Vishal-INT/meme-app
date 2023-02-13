@@ -16,7 +16,6 @@ const MemePage = () => {
   const [filteredMemeData, setFilteredMemeData] = useState([]);
   const [detailedMeme, setDetailedMeme] = useState({});
   const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
-  const [isFavButtonClicked, setIsFavButtonClicked] = useState(false);
   const [loading, setLoading] = useState();
 
   const getMemeData = async () => {
@@ -30,21 +29,12 @@ const MemePage = () => {
   };
   const handleFavMemes = (e, meme) => {
     e.preventDefault();
-    setIsFavButtonClicked(true);
-    setIsDetailedModalOpen(false);
     if (favMemeArr.some((element) => element.id == meme.id)) {
       dispatch(deleteFavMeme(meme));
     } else {
       dispatch(addFavMeme(meme));
     }
   };
-
-  // const handleDetailedPage = (meme) => {
-  //   if (isFavButtonClicked == false) {
-  //     setDetailedMeme(meme);
-  //     setIsDetailedModalOpen(true);
-  //   }
-  // };
 
   const handleDetailedPage = (e, meme) => {
     if (e.target.nodeName === "IMG") {
@@ -54,6 +44,7 @@ const MemePage = () => {
       setIsDetailedModalOpen(false);
     }
   };
+
   useEffect(() => {
     setLoading(true);
     getMemeData();
@@ -66,9 +57,6 @@ const MemePage = () => {
       return filteredMemeData;
     }
   };
-
-  console.log("isDetailedModalOpen ==>", isDetailedModalOpen);
-  console.log("isFav butn clicked", isFavButtonClicked);
 
   return (
     <div className="meme-page-bg">
@@ -110,7 +98,6 @@ const MemePage = () => {
         <MemeModal
           detailedMeme={detailedMeme}
           isDetailedModalOpen={isDetailedModalOpen}
-          isFavButtonClicked={isFavButtonClicked}
           setIsDetailedModalOpen={setIsDetailedModalOpen}
         />
       ) : null}
