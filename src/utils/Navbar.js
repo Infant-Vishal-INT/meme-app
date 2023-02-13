@@ -13,16 +13,16 @@ const NavbarComponent = () => {
         <Navbar.Brand className="navbar-brand-name">Hello, Vishal</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Link to="/fav_memes" className="me-4">
-            {location.pathname == "/memes" ? (
+          {location.pathname == "/memes" ? (
+            <Link to="/fav_memes" className="me-4">
               <AiOutlineHeart color="white" fontSize="2em" />
-            ) : (
-              <AiFillHeart color="red" fontSize="2em" />
-            )}
-          </Link>
-          <Link to="/memes">
-            <button className="btn btn-light me-4">All memes</button>
-          </Link>
+            </Link>
+          ) : location.pathname == "/fav_memes" ? (
+            <Link to="/memes">
+              <button className="btn btn-light me-4">All memes</button>
+            </Link>
+          ) : null}
+
           <Link to="/">
             <button className="btn btn-dark">Logout</button>
           </Link>
