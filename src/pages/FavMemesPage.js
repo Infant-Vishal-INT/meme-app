@@ -1,10 +1,8 @@
 import React from "react";
-import { Container, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFavMeme } from "../redux/actions";
-import "../assets/css/navbar.css";
+import NavbarComponent from "../utils/Navbar";
 import "../assets/css/memePage.css";
 
 const FavMemesPage = () => {
@@ -15,26 +13,10 @@ const FavMemesPage = () => {
     const index = favMemeArr.indexOf(meme);
     dispatch(deleteFavMeme(index));
   };
-  console.log("fav meme array ==>", favMemeArr);
 
   return (
     <div className="meme-page-bg">
-      <Navbar bg="primary">
-        <Container>
-          <Navbar.Brand className="navbar-brand-name">
-            Hello, Vishal
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Link to="/fav_memes" className="me-4">
-              <AiFillHeart color="red" fontSize="2em" />
-            </Link>
-            <Link to="/">
-              <button className="btn btn-dark">Logout</button>
-            </Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavbarComponent />
 
       <div>
         {favMemeArr.map((meme) => {

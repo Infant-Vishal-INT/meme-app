@@ -21,6 +21,8 @@ const LoginPage = () => {
     password: "",
   };
 
+  localStorage.setItem("memePageLoggedIn", false);
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: yup.object({
@@ -32,6 +34,7 @@ const LoginPage = () => {
     }),
     onSubmit: (values) => {
       if (_.isEqual(values, loginCredentials)) {
+        localStorage.setItem("memePageLoggedIn", true);
         toast.success("Updated successfully", {
           position: "bottom-right",
           autoClose: 3000,

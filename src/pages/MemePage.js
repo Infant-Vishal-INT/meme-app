@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addFavMeme,
-  clearPersistedData,
-  deleteFavMeme,
-} from "../redux/actions";
-import "../assets/css/navbar.css";
+import { addFavMeme, deleteFavMeme } from "../redux/actions";
 import "../assets/css/memePage.css";
+import NavbarComponent from "../utils/Navbar";
 
 const MemePage = () => {
   const dispatch = useDispatch();
@@ -47,34 +41,15 @@ const MemePage = () => {
       dispatch(addFavMeme(meme));
     }
   };
-  console.log("fav meme array ==>", favMemeArr);
 
   useEffect(() => {
     setLoading(true);
     getMemeData();
   }, []);
 
-  console.log("filtered meme data", filteredMemeData);
-
   return (
     <div className="meme-page-bg">
-      <Navbar bg="primary">
-        <Container>
-          <Navbar.Brand className="navbar-brand-name">
-            Hello, Vishal
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Link to="/fav_memes" className="me-4">
-              <AiOutlineHeart color="white" fontSize="2em" />
-            </Link>
-            <Link to="/">
-              <button className="btn btn-dark">Logout</button>
-            </Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
+      <NavbarComponent />
       <div className="d-flex flex-row justify-content-center mt-5">
         <input
           type="search"
