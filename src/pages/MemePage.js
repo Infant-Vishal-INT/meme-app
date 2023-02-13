@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFavMeme, deleteFavMeme } from "../redux/actions";
 import "../assets/css/memePage.css";
 import NavbarComponent from "../utils/Navbar";
+import SearchBar from "../utils/SearchBar";
 
 const MemePage = () => {
   const dispatch = useDispatch();
   const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
-
   const [memeData, setMemeData] = useState([]);
   const [filteredMemeData, setFilteredMemeData] = useState([]);
-  const [searchInputVal, setSearchInputVal] = useState("");
   const [loading, setLoading] = useState();
 
   const getMemeData = async () => {
@@ -23,14 +22,6 @@ const MemePage = () => {
         setMemeData(response.data.data.memes);
       })
       .catch((err) => console.error("Err", err));
-  };
-
-  const handleSearch = () => {
-    setFilteredMemeData(
-      memeData.filter((meme) =>
-        meme.name.toLowerCase().includes(searchInputVal.toLowerCase())
-      )
-    );
   };
 
   const handleFavMemes = (meme) => {
@@ -50,17 +41,10 @@ const MemePage = () => {
   return (
     <div className="meme-page-bg">
       <NavbarComponent />
-      <div className="d-flex flex-row justify-content-center mt-5">
-        <input
-          type="search"
-          className="form-control w-75 me-4"
-          placeholder="Search by Meme Name"
-          onChange={(e) => setSearchInputVal(e.target.value)}
-        />
-        <button className="btn btn-success" onClick={handleSearch}>
-          Search
-        </button>
-      </div>
+      <SearchBar
+        memeData={memeData}
+        setFilteredMemeData={setFilteredMemeData}
+      />
       <div>
         {loading ? <div>Loading...</div> : null}
 
