@@ -5,12 +5,11 @@ import Button from "react-bootstrap/Button";
 const MemeModal = ({
   detailedMeme,
   isDetailedModalOpen,
+  isFavButtonClicked,
   setIsDetailedModalOpen,
-  setIsFavButtonClicked,
 }) => {
   const handleClose = () => {
     setIsDetailedModalOpen(false);
-    setIsFavButtonClicked(false);
   };
 
   return (

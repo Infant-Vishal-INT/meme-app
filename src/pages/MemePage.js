@@ -28,8 +28,10 @@ const MemePage = () => {
       })
       .catch((err) => console.error("Err", err));
   };
-  const handleFavMemes = (meme) => {
+  const handleFavMemes = (e, meme) => {
+    e.preventDefault();
     setIsFavButtonClicked(true);
+    setIsDetailedModalOpen(false);
     if (favMemeArr.some((element) => element.id == meme.id)) {
       dispatch(deleteFavMeme(meme));
     } else {
@@ -37,14 +39,21 @@ const MemePage = () => {
     }
   };
 
-  const handleDetailedPage = (meme) => {
-    console.log("is fav button clicked", isFavButtonClicked);
-    if (isFavButtonClicked == false) {
+  // const handleDetailedPage = (meme) => {
+  //   if (isFavButtonClicked == false) {
+  //     setDetailedMeme(meme);
+  //     setIsDetailedModalOpen(true);
+  //   }
+  // };
+
+  const handleDetailedPage = (e, meme) => {
+    if (e.target.nodeName === "IMG") {
       setDetailedMeme(meme);
       setIsDetailedModalOpen(true);
+    } else {
+      setIsDetailedModalOpen(false);
     }
   };
-
   useEffect(() => {
     setLoading(true);
     getMemeData();
@@ -59,6 +68,7 @@ const MemePage = () => {
   };
 
   console.log("isDetailedModalOpen ==>", isDetailedModalOpen);
+  console.log("isFav butn clicked", isFavButtonClicked);
 
   return (
     <div className="meme-page-bg">
@@ -75,14 +85,14 @@ const MemePage = () => {
             <div
               key={meme.id}
               className="d-flex flex-row justify-content-center"
-              onClick={() => handleDetailedPage(meme)}
+              onClick={(e) => handleDetailedPage(e, meme)}
             >
               <div className="img-wrapper">
                 <img src={meme.url} alt={meme.name} className="meme-img" />
                 <div
                   type="button"
                   className="fav-wrapper"
-                  onClick={() => handleFavMemes(meme)}
+                  onClick={(e) => handleFavMemes(e, meme)}
                 >
                   {favMemeArr.some((element) => element.id == meme.id) ? (
                     <AiFillHeart color="red" fontSize="2em" />
@@ -100,8 +110,8 @@ const MemePage = () => {
         <MemeModal
           detailedMeme={detailedMeme}
           isDetailedModalOpen={isDetailedModalOpen}
+          isFavButtonClicked={isFavButtonClicked}
           setIsDetailedModalOpen={setIsDetailedModalOpen}
-          setIsFavButtonClicked={setIsFavButtonClicked}
         />
       ) : null}
     </div>
