@@ -20,6 +20,9 @@ const NavbarComponent = () => {
               <AiFillHeart color="red" fontSize="2em" />
             )}
           </Link>
+          <Link to="/memes">
+            <button className="btn btn-light me-4">All memes</button>
+          </Link>
           <Link to="/">
             <button className="btn btn-dark">Logout</button>
           </Link>
