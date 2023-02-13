@@ -13,8 +13,7 @@ const FavMemeReducer = (state = initialState, action) => {
       return {
         ...state,
         favMemeArr: [
-          ...state.favMemeArr.slice(0, action.payload),
-          ...state.favMemeArr.slice(action.payload + 1),
+          ...state.favMemeArr.filter((meme) => meme.id != action.payload.id),
         ],
       };
     case "CLEARPERSISTEDDATA":

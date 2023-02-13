@@ -3,15 +3,20 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavMeme, deleteFavMeme } from "../redux/actions";
-import "../assets/css/memePage.css";
 import NavbarComponent from "../utils/Navbar";
 import SearchBar from "../utils/SearchBar";
+import MemeModal from "../utils/MemeModal";
+import "../assets/css/memePage.css";
 
 const MemePage = () => {
   const dispatch = useDispatch();
   const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
+
   const [memeData, setMemeData] = useState([]);
   const [filteredMemeData, setFilteredMemeData] = useState([]);
+  const [detailedMeme, setDetailedMeme] = useState({});
+  const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
+  const [isFavButtonClicked, setIsFavButtonClicked] = useState(false);
   const [loading, setLoading] = useState();
 
   const getMemeData = async () => {
@@ -23,13 +28,20 @@ const MemePage = () => {
       })
       .catch((err) => console.error("Err", err));
   };
-
   const handleFavMemes = (meme) => {
-    if (favMemeArr.includes(meme)) {
-      const index = favMemeArr.indexOf(meme);
-      dispatch(deleteFavMeme(index));
+    setIsFavButtonClicked(true);
+    if (favMemeArr.some((element) => element.id == meme.id)) {
+      dispatch(deleteFavMeme(meme));
     } else {
       dispatch(addFavMeme(meme));
+    }
+  };
+
+  const handleDetailedPage = (meme) => {
+    console.log("is fav button clicked", isFavButtonClicked);
+    if (isFavButtonClicked == false) {
+      setDetailedMeme(meme);
+      setIsDetailedModalOpen(true);
     }
   };
 
@@ -37,6 +49,16 @@ const MemePage = () => {
     setLoading(true);
     getMemeData();
   }, []);
+
+  const outputData = () => {
+    if (filteredMemeData.length == 0) {
+      return memeData;
+    } else {
+      return filteredMemeData;
+    }
+  };
+
+  console.log("isDetailedModalOpen ==>", isDetailedModalOpen);
 
   return (
     <div className="meme-page-bg">
@@ -48,56 +70,40 @@ const MemePage = () => {
       <div>
         {loading ? <div>Loading...</div> : null}
 
-        {filteredMemeData.length == 0
-          ? memeData.map((meme) => {
-              return (
+        {outputData().map((meme) => {
+          return (
+            <div
+              key={meme.id}
+              className="d-flex flex-row justify-content-center"
+              onClick={() => handleDetailedPage(meme)}
+            >
+              <div className="img-wrapper">
+                <img src={meme.url} alt={meme.name} className="meme-img" />
                 <div
-                  key={meme.id}
-                  className="d-flex flex-row justify-content-center"
+                  type="button"
+                  className="fav-wrapper"
+                  onClick={() => handleFavMemes(meme)}
                 >
-                  <div className="img-wrapper">
-                    <img src={meme.url} alt={meme.name} className="meme-img" />
-                    <div
-                      type="button"
-                      className="fav-wrapper"
-                      onClick={() => handleFavMemes(meme)}
-                    >
-                      {favMemeArr.includes(meme) ? (
-                        <AiFillHeart color="red" fontSize="2em" />
-                      ) : (
-                        <AiOutlineHeart color="white" fontSize="2em" />
-                      )}
-                    </div>
-                    <div className="meme-name slide-up">{meme.name}</div>
-                  </div>
+                  {favMemeArr.some((element) => element.id == meme.id) ? (
+                    <AiFillHeart color="red" fontSize="2em" />
+                  ) : (
+                    <AiOutlineHeart color="white" fontSize="2em" />
+                  )}
                 </div>
-              );
-            })
-          : filteredMemeData.map((meme) => {
-              return (
-                <div
-                  key={meme.id}
-                  className="d-flex flex-row justify-content-center"
-                >
-                  <div className="img-wrapper">
-                    <img src={meme.url} alt={meme.name} className="meme-img" />
-                    <div
-                      type="button"
-                      className="fav-wrapper"
-                      onClick={() => handleFavMemes(meme)}
-                    >
-                      {favMemeArr.includes(meme) ? (
-                        <AiFillHeart color="red" fontSize="2em" />
-                      ) : (
-                        <AiOutlineHeart color="white" fontSize="2em" />
-                      )}
-                    </div>
-                    <div className="meme-name slide-up">{meme.name}</div>
-                  </div>
-                </div>
-              );
-            })}
+                <div className="meme-name slide-up">{meme.name}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
+      {isDetailedModalOpen ? (
+        <MemeModal
+          detailedMeme={detailedMeme}
+          isDetailedModalOpen={isDetailedModalOpen}
+          setIsDetailedModalOpen={setIsDetailedModalOpen}
+          setIsFavButtonClicked={setIsFavButtonClicked}
+        />
+      ) : null}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import DetailedPage from "../pages/DetailedPage";
 import FavMemesPage from "../pages/FavMemesPage";
 import LoginPage from "../pages/login";
 import MemePage from "../pages/MemePage";

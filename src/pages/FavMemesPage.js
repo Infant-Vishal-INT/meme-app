@@ -9,9 +9,11 @@ const FavMemesPage = () => {
   const dispatch = useDispatch();
   const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
 
+  console.log("fav meme arr from fav meme page ==>", favMemeArr);
+
   const handleDeleteFavMemes = (meme) => {
     const index = favMemeArr.indexOf(meme);
-    dispatch(deleteFavMeme(index));
+    dispatch(deleteFavMeme(meme));
   };
 
   return (
