@@ -1,16 +1,30 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import FavMemesPage from "../pages/FavMemesPage";
 import LoginPage from "../pages/login";
 import MemePage from "../pages/MemePage";
 
 const MainRouter = () => {
+  const location = useLocation();
+
+  if (location.pathname === "/") {
+    localStorage.setItem("memePageLoggedIn", false);
+  }
+
+  const isLogged = JSON.parse(localStorage.getItem("memePageLoggedIn"));
+
   return (
     <>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/memes" element={<MemePage />} />
-        <Route path="/fav_memes" element={<FavMemesPage />} />
+        <Route
+          path="/memes"
+          element={isLogged ? <MemePage /> : <Navigate replace to={"/"} />}
+        />
+        <Route
+          path="/fav_memes"
+          element={isLogged ? <FavMemesPage /> : <Navigate replace to={"/"} />}
+        />
       </Routes>
     </>
   );

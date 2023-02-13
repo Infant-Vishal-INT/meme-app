@@ -21,8 +21,6 @@ const LoginPage = () => {
     password: "",
   };
 
-  localStorage.setItem("memePageLoggedIn", false);
-
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: yup.object({
