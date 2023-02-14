@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Container, Row } from "react-bootstrap";
 import NavbarComponent from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import MemeCard from "../components/MemeCard";
@@ -42,10 +43,13 @@ const MemePage = () => {
       />
       <div>
         {loading ? <div>Loading...</div> : null}
-
-        {outputData().map((meme) => {
-          return <MemeCard meme={meme} />;
-        })}
+        <Container>
+          <Row>
+            {outputData().map((meme) => {
+              return <MemeCard meme={meme} />;
+            })}
+          </Row>
+        </Container>
       </div>
     </div>
   );

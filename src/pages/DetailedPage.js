@@ -10,7 +10,7 @@ const DetailedPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { detailedMeme } = location.state;
+  const { detailedMeme } = location.state || {};
 
   const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
 
