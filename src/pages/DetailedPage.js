@@ -10,13 +10,13 @@ const DetailedPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { detailedMeme } = location.state || {};
 
+  const { detailedMeme } = location.state || {};
   const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
 
   const handleFavMemes = (e, meme) => {
     e.preventDefault();
-    if (favMemeArr.some((element) => element.id == meme.id)) {
+    if (favMemeArr.some((element) => element.id === meme.id)) {
       dispatch(deleteFavMeme(meme));
     } else {
       dispatch(addFavMeme(meme));
@@ -47,7 +47,7 @@ const DetailedPage = () => {
               className="fav-wrapper"
               onClick={(e) => handleFavMemes(e, detailedMeme)}
             >
-              {favMemeArr.some((element) => element.id == detailedMeme.id) ? (
+              {favMemeArr.some((element) => element.id === detailedMeme.id) ? (
                 <AiFillHeart color="red" fontSize="2em" />
               ) : (
                 <AiOutlineHeart color="white" fontSize="2em" />

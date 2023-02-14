@@ -27,7 +27,7 @@ const MemePage = () => {
   }, []);
 
   const outputData = () => {
-    if (filteredMemeData.length == 0) {
+    if (filteredMemeData.length === 0) {
       return memeData;
     } else {
       return filteredMemeData;
@@ -46,7 +46,7 @@ const MemePage = () => {
         <Container>
           <Row>
             {outputData().map((meme) => {
-              return <MemeCard meme={meme} />;
+              return <MemeCard meme={meme} key={meme.id} />;
             })}
           </Row>
         </Container>

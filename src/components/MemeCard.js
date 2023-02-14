@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { addFavMeme, deleteFavMeme } from "../redux/actions";
 import { Col } from "react-bootstrap";
+import { addFavMeme, deleteFavMeme } from "../redux/actions";
 import "../assets/css/memePage.css";
 
 const MemeCard = ({ meme }) => {
@@ -19,7 +19,7 @@ const MemeCard = ({ meme }) => {
   };
   const handleFavMemes = (e, meme) => {
     e.preventDefault();
-    if (favMemeArr.some((element) => element.id == meme.id)) {
+    if (favMemeArr.some((element) => element.id === meme.id)) {
       dispatch(deleteFavMeme(meme));
     } else {
       dispatch(addFavMeme(meme));
@@ -28,7 +28,6 @@ const MemeCard = ({ meme }) => {
   return (
     <Col lg={6}>
       <div
-        key={meme.id}
         className="d-flex flex-row justify-content-center"
         onClick={(e) => handleDetailedPage(e, meme)}
       >
@@ -39,7 +38,7 @@ const MemeCard = ({ meme }) => {
             className="fav-wrapper"
             onClick={(e) => handleFavMemes(e, meme)}
           >
-            {favMemeArr.some((element) => element.id == meme.id) ? (
+            {favMemeArr.some((element) => element.id === meme.id) ? (
               <AiFillHeart color="red" fontSize="2em" />
             ) : (
               <AiOutlineHeart color="white" fontSize="2em" />

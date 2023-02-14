@@ -10,6 +10,7 @@ const SearchBar = ({ memeData, setFilteredMemeData }) => {
       )
     );
   };
+
   return (
     <div>
       <div className="d-flex flex-row justify-content-center mt-5">
