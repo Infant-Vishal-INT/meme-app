@@ -11,9 +11,9 @@ export const addFavMeme = (meme) => {
   };
 };
 
-export const deleteFavMeme = (index) => {
+export const deleteFavMeme = (meme) => {
   return {
     type: "DELETEFAVMEME",
-    payload: index,
+    payload: meme,
   };
 };

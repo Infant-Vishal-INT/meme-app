@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addFavMeme, deleteFavMeme } from "../redux/actions";
-import NavbarComponent from "../utils/Navbar";
-import SearchBar from "../utils/SearchBar";
-import MemeModal from "../utils/MemeModal";
+import NavbarComponent from "../components/Navbar";
+import SearchBar from "../components/SearchBar";
+import MemeCard from "../components/MemeCard";
 import "../assets/css/memePage.css";
 
 const MemePage = () => {
-  const dispatch = useDispatch();
-  const favMemeArr = useSelector((state) => state.favMemeReducer.favMemeArr);
-
   const [memeData, setMemeData] = useState([]);
   const [filteredMemeData, setFilteredMemeData] = useState([]);
-  const [detailedMeme, setDetailedMeme] = useState({});
-  const [isDetailedModalOpen, setIsDetailedModalOpen] = useState(false);
   const [loading, setLoading] = useState();
 
   const getMemeData = async () => {
@@ -26,23 +18,6 @@ const MemePage = () => {
         setMemeData(response.data.data.memes);
       })
       .catch((err) => console.error("Err", err));
-  };
-  const handleFavMemes = (e, meme) => {
-    e.preventDefault();
-    if (favMemeArr.some((element) => element.id == meme.id)) {
-      dispatch(deleteFavMeme(meme));
-    } else {
-      dispatch(addFavMeme(meme));
-    }
-  };
-
-  const handleDetailedPage = (e, meme) => {
-    if (e.target.nodeName === "IMG") {
-      setDetailedMeme(meme);
-      setIsDetailedModalOpen(true);
-    } else {
-      setIsDetailedModalOpen(false);
-    }
   };
 
   useEffect(() => {
@@ -69,38 +44,9 @@ const MemePage = () => {
         {loading ? <div>Loading...</div> : null}
 
         {outputData().map((meme) => {
-          return (
-            <div
-              key={meme.id}
-              className="d-flex flex-row justify-content-center"
-              onClick={(e) => handleDetailedPage(e, meme)}
-            >
-              <div className="img-wrapper">
-                <img src={meme.url} alt={meme.name} className="meme-img" />
-                <div
-                  type="button"
-                  className="fav-wrapper"
-                  onClick={(e) => handleFavMemes(e, meme)}
-                >
-                  {favMemeArr.some((element) => element.id == meme.id) ? (
-                    <AiFillHeart color="red" fontSize="2em" />
-                  ) : (
-                    <AiOutlineHeart color="white" fontSize="2em" />
-                  )}
-                </div>
-                <div className="meme-name slide-up">{meme.name}</div>
-              </div>
-            </div>
-          );
+          return <MemeCard meme={meme} />;
         })}
       </div>
-      {isDetailedModalOpen ? (
-        <MemeModal
-          detailedMeme={detailedMeme}
-          isDetailedModalOpen={isDetailedModalOpen}
-          setIsDetailedModalOpen={setIsDetailedModalOpen}
-        />
-      ) : null}
     </div>
   );
 };

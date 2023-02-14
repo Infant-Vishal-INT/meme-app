@@ -21,10 +21,14 @@ const MainRouter = () => {
         <Route
           path="/memes"
           element={isLogged ? <MemePage /> : <Navigate replace to={"/"} />}
-        />
+        ></Route>
         <Route
           path="/fav_memes"
           element={isLogged ? <FavMemesPage /> : <Navigate replace to={"/"} />}
+        />
+        <Route
+          path="/detailed_page"
+          element={isLogged ? <DetailedPage /> : <Navigate replace to={"/"} />}
         />
       </Routes>
     </>

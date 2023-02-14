@@ -2,7 +2,7 @@ import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFavMeme } from "../redux/actions";
-import NavbarComponent from "../utils/Navbar";
+import NavbarComponent from "../components/Navbar";
 import "../assets/css/memePage.css";
 
 const FavMemesPage = () => {
