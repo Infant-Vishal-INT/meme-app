@@ -5,6 +5,7 @@ import NavbarComponent from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import MemeCard from "../components/MemeCard";
 import "../assets/css/memePage.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const MemePage = () => {
   const [memeData, setMemeData] = useState([]);
@@ -18,7 +19,20 @@ const MemePage = () => {
         setLoading(false);
         setMemeData(response.data.data.memes);
       })
-      .catch((err) => console.error("Err", err));
+      .catch((err) =>
+        toast.error(
+          { err },
+          {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        )
+      );
   };
 
   useEffect(() => {
@@ -36,6 +50,7 @@ const MemePage = () => {
 
   return (
     <div className="meme-page-bg">
+      <ToastContainer />
       <NavbarComponent />
       <SearchBar
         memeData={memeData}
