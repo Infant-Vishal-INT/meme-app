@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
 import NavbarComponent from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import MemeCard from "../components/MemeCard";
 import "../assets/css/memePage.css";
-import { toast, ToastContainer } from "react-toastify";
 
 const MemePage = () => {
   const [memeData, setMemeData] = useState([]);
