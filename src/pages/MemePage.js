@@ -19,20 +19,17 @@ const MemePage = () => {
         setLoading(false);
         setMemeData(response.data.data.memes);
       })
-      .catch((err) =>
-        toast.error(
-          { err },
-          {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          }
-        )
-      );
+      .catch((err) => {
+        toast.error(`${err.message}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
 
   useEffect(() => {
