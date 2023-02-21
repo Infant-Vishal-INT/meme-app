@@ -55,13 +55,19 @@ const MemePage = () => {
       />
       <div>
         {loading ? <div>Loading...</div> : null}
-        <Container>
-          <Row>
-            {outputData().map((meme) => {
-              return <MemeCard meme={meme} key={meme.id} />;
-            })}
-          </Row>
-        </Container>
+        {filteredMemeData[0] === "No data" ? (
+          <div className="text-center mt-5">
+            <h3>No Data Found</h3>
+          </div>
+        ) : (
+          <Container>
+            <Row>
+              {outputData().map((meme) => {
+                return <MemeCard meme={meme} key={meme.id} />;
+              })}
+            </Row>
+          </Container>
+        )}
       </div>
     </div>
   );

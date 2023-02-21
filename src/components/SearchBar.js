@@ -4,11 +4,15 @@ const SearchBar = ({ memeData, setFilteredMemeData }) => {
   const [searchInputVal, setSearchInputVal] = useState("");
 
   const handleSearch = () => {
-    setFilteredMemeData(
-      memeData.filter((meme) =>
-        meme.name.toLowerCase().includes(searchInputVal.toLowerCase())
-      )
+    const searchResult = memeData.filter((meme) =>
+      meme.name.toLowerCase().includes(searchInputVal.toLowerCase())
     );
+
+    if (searchResult.length !== 0) {
+      setFilteredMemeData(searchResult);
+    } else {
+      setFilteredMemeData(["No data"]);
+    }
   };
 
   return (
