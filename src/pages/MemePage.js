@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
 import NavbarComponent from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import MemeCard from "../components/MemeCard";
@@ -18,7 +19,17 @@ const MemePage = () => {
         setLoading(false);
         setMemeData(response.data.data.memes);
       })
-      .catch((err) => console.error("Err", err));
+      .catch((err) => {
+        toast.error(`${err.message}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
 
   useEffect(() => {
@@ -36,6 +47,7 @@ const MemePage = () => {
 
   return (
     <div className="meme-page-bg">
+      <ToastContainer />
       <NavbarComponent />
       <SearchBar
         memeData={memeData}
@@ -43,13 +55,19 @@ const MemePage = () => {
       />
       <div>
         {loading ? <div>Loading...</div> : null}
-        <Container>
-          <Row>
-            {outputData().map((meme) => {
-              return <MemeCard meme={meme} key={meme.id} />;
-            })}
-          </Row>
-        </Container>
+        {filteredMemeData[0] === "No data" ? (
+          <div className="text-center mt-5">
+            <h3>No Data Found</h3>
+          </div>
+        ) : (
+          <Container>
+            <Row>
+              {outputData().map((meme) => {
+                return <MemeCard meme={meme} key={meme.id} />;
+              })}
+            </Row>
+          </Container>
+        )}
       </div>
     </div>
   );
